@@ -1,0 +1,61 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowLogs",
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Resource": [
+                "arn:aws:logs:*:*:log-group:Heatmap*",
+                "arn:aws:logs:*:*:log-group:Heatmap*:log-stream:Heatmap*"
+            ]
+        },
+        {
+            "Sid": "AllowECRGets",
+            "Effect": "Allow",
+            "Action": [
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:BatchGetImage",
+                "ecr:BatchCheckLayerAvailability"
+            ],
+            "Resource": [
+                "arn:aws:ecr:*:*:repository/aws-cdk/assets"
+            ]
+        },
+        {
+            "Sid": "ECRToken",
+            "Effect": "Allow",
+            "Action": "ecr:GetAuthorizationToken",
+            "Resource": "*"
+        },
+        {
+            "Sid": "AllowHub",
+            "Effect": "Allow",
+            "Action": [
+                "securityhub:DescribeHub",
+                "securityhub:UpdateFindings",
+                "securityhub:BatchUpdateFindings",
+                "securityhub:GetFindings",
+                "securityhub:GetInsights"
+            ],
+            "Resource": [
+                "arn:aws:securityhub:*:*:hub/*",
+                "arn:aws:securityhub:*:*:/findings/batchupdate"
+            ]
+        },
+        {
+            "Sid": "AllowSecretRetrieval",
+            "Effect": "Allow",
+            "Action": [
+                "secretsmanager:GetResourcePolicy",
+                "secretsmanager:GetSecretValue",
+                "secretsmanager:DescribeSecret",
+                "secretsmanager:ListSecretVersionIds"
+            ],
+            "Resource": "arn:aws:secretsmanager:*:*:secret:defenda-heatmap-oidc-client-secret*"
+        }
+    ]
+}
