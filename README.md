@@ -1,2 +1,2 @@
 # securityhub-heatmap-support
-Supporting code for the securityhub-heatmap container
+Supporting code, docs, issues, etc for the securityhub-heatmap container
