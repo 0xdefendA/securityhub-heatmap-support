@@ -1,0 +1,21 @@
+# these are the default
+# configuration variables
+# meant to be over-ridden with either
+# config.prod.yml, config.dev.yml (whatever is in the ENVIRONMENT, environ variable)
+# or set in the runtime environment
+# environment variables win over all other settings.
+SERVER_NAME: "none"
+PREFERRED_URL_SCHEME: "http"
+DEBUG: True
+CACHE_EXPIRATION: "10 min"
+DB_FILENAME: "/app/defendA-securityhub.sqlite"
+AWS_DEFAULT_REGION: "us-west-2"
+REGIONS:
+    - "us-east-1"
+    - "us-west-2"
+OIDC_PROVIDER_NAME: "google"
+OIDC_ISSUER: "https://accounts.google.com"
+OIDC_CLIENT_ID: "defendA-securityhub-heatmap"
+OIDC_CLIENT_SECRET_NAME: "none"
+OIDC_CLIENT_SECRET: "none"
+OIDC_SESSION_LIFETIME_HOURS: 7
