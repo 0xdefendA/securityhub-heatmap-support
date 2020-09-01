@@ -62,4 +62,10 @@ docker run -d -p 80:80 -v ${HOME}/.aws/:/root/.aws/:ro -e 'OIDC_PROVIDER_NAME=no
 docker logs securityhub-heatmap
 ```
 
+- To stop the local container:
+
+```
+docker container stop securityhub-heatmap
+```
+
 - For production implementation, please see the cdk_deployment which will deploy a fargate hosted instance of the container, configured with OIDC authentication
