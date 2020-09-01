@@ -28,3 +28,32 @@ You can and should override these in the container environment, especially to se
  - OIDC_CLIENT_SECRET_NAME: the name you use if you store the client secret in secrets manager
  - OIDC_CLIENT_SECRET: the raw secret if you prefer to pass it without using secrets manager
  - OIDC_SESSION_LIFETIME_HOURS: 7 hours by default, set as desired.
+
+ ### Usage Instructions
+
+ - Install and configure the AWS CLI. Please see https://docs.aws.amazon.com/cli/latest/userguide/installing.html for details.
+
+ - Authenticate your Docker client to the heatmap registry:
+
+```
+aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 717455710680.dkr.ecr.us-west-2.amazonaws.com
+```
+
+On successful login the following message will be seen :
+
+    Login Succeeded
+
+ - Now pull the docker image
+```
+docker pull 717455710680.dkr.ecr.us-west-2.amazonaws.com/defenda/securityhub-heatmap:latest
+```
+
+ - Start a single local instance of the container in the following way :
+
+```
+docker run -d -p 80:80 -v ${HOME}/.aws/:/root/.aws/:ro -e 'OIDC_PROVIDER_NAME=none' 717455710680.dkr.ecr.us-west-2.amazonaws.com/defenda/securityhub-heatmap
+```
+
+- The above command publishes the container's port 80 to your localhost with NO AUTHENTICATION. This is suitable for local testing/integration only.   To access the web UI enter http://localhost/ in your browser.
+
+- For production implementation, please see the cdk_deployment which will deploy a fargate hosted instance of the container, configured with OIDC authentication
