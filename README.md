@@ -48,12 +48,18 @@ On successful login the following message will be seen :
 docker pull 717455710680.dkr.ecr.us-west-2.amazonaws.com/defenda/securityhub-heatmap:latest
 ```
 
- - Start a single local instance of the container in the following way :
+ - Start a single local instance of the container via the following:
 
 ```
-docker run -d -p 80:80 -v ${HOME}/.aws/:/root/.aws/:ro -e 'OIDC_PROVIDER_NAME=none' 717455710680.dkr.ecr.us-west-2.amazonaws.com/defenda/securityhub-heatmap
+docker run -d -p 80:80 -v ${HOME}/.aws/:/root/.aws/:ro -e 'OIDC_PROVIDER_NAME=none' --name securityhub-heatmap 717455710680.dkr.ecr.us-west-2.amazonaws.com/defenda/securityhub-heatmap
 ```
 
 - The above command publishes the container's port 80 to your localhost with NO AUTHENTICATION. This is suitable for local testing/integration only.   To access the web UI enter http://localhost/ in your browser.
+
+- For troubleshooting you can access the local container logs via:
+
+```
+docker logs securityhub-heatmap
+```
 
 - For production implementation, please see the cdk_deployment which will deploy a fargate hosted instance of the container, configured with OIDC authentication
