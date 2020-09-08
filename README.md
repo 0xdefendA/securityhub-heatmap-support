@@ -51,7 +51,7 @@ docker pull 717455710680.dkr.ecr.us-west-2.amazonaws.com/defenda/securityhub-hea
  - Start a single local instance of the container via the following:
 
 ```
-docker run -d -p 80:80 -v ${HOME}/.aws/:/root/.aws/:ro -e 'OIDC_PROVIDER_NAME=none' --name securityhub-heatmap 717455710680.dkr.ecr.us-west-2.amazonaws.com/defenda/securityhub-heatmap
+docker run --rm -d -p 80:80 -v ${HOME}/.aws/:/root/.aws/:ro -e 'OIDC_PROVIDER_NAME=none' --name securityhub-heatmap 717455710680.dkr.ecr.us-west-2.amazonaws.com/defenda/securityhub-heatmap
 ```
 
 - The above command publishes the container's port 80 to your localhost with NO AUTHENTICATION. This is suitable for local testing/integration only.   To access the web UI enter http://localhost/ in your browser.
