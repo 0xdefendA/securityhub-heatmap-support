@@ -5,15 +5,18 @@ Supporting code, docs, issues, etc for the securityhub-heatmap container
 ## CDK
 The cdk_deployment directory contains code to get a working deployment of the heatmap in a Fargate ECS cluster. The cluster will be created along with a load balancer and supporting vpcs. A TLS cert is not included, but you can either add to the CDK deployment, or add a TLS listener with an appropriate cert after deployment.
 
+The heatmap_policy.json doc is the IAM policy used by the CDK deployment and includes everything the heatmap will need in order to operate. You can use this as a kickstarter if you plan to deploy via some other means (terraform, cloudformation, etc)
+
 ### Environment
-The default environment/configuration variables are set initially in config.yml.
+The default environment/configuration variables are set initially in config.yml (inside the container).
 
 You can and should override these in the container environment, especially to set:
 
  - SERVER_NAME : dns name of the resulting server (i.e. heatmap.somewhere.com)
  - PREFERRED_URL_SCHEME: http by default, should set to https in a production setting
+ - DEBUG: True by default, set to False if you'd like less logging/messages
  - OIDC* (see below)
- - REGIONS: a list of regions you'd like to retrieve findings from
+ - REGIONS: a list of regions you'd like to retrieve findings from. If more than one, separate with commas i.e. us-west-1,us-east-1
  - CACHE_EXPIRATION: 10 min by default, This determines the frequency by which the heatmap will refresh it's cache of all findings from security hub. Any updates within the heatmap are cached on update. If you expect frequent external updates to findings, set the expiration accordingly. (sec = seconds, min = minutes, hours=hours, days=days )
  - DB_FILENAME: cache file location (set if you would like it elsewhere, an EFS mount, etc)
  - AWS_DEFAULT_REGION: the region the hub will operate in by default for making calls to securityhub.
@@ -28,6 +31,8 @@ You can and should override these in the container environment, especially to se
  - OIDC_CLIENT_SECRET_NAME: the name you use if you store the client secret in secrets manager
  - OIDC_CLIENT_SECRET: the raw secret if you prefer to pass it without using secrets manager
  - OIDC_SESSION_LIFETIME_HOURS: 7 hours by default, set as desired.
+
+
 
  ### Usage Instructions
 
