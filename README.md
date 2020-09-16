@@ -41,7 +41,7 @@ You can and should override these in the container environment, especially to se
  - Authenticate your Docker client to the heatmap registry:
 
 ```
-aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 717455710680.dkr.ecr.us-west-2.amazonaws.com
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 117940112483.dkr.ecr.us-east-1.amazonaws.com
 ```
 
 On successful login the following message will be seen :
@@ -50,16 +50,16 @@ On successful login the following message will be seen :
 
  - Now pull the docker image
 ```
-docker pull 717455710680.dkr.ecr.us-west-2.amazonaws.com/defenda/securityhub-heatmap:latest
+docker pull 117940112483.dkr.ecr.us-east-1.amazonaws.com/7884b327-1a1a-4f59-8d04-0a6edfc28697/cg-2662330872/securityhub-heatmap
 ```
 
  - Start a single local instance of the container via the following:
 
 ```
-docker run --rm -d -p 80:80 -v ${HOME}/.aws/:/app/.aws/:ro -e 'OIDC_PROVIDER_NAME=none' --name securityhub-heatmap 717455710680.dkr.ecr.us-west-2.amazonaws.com/defenda/securityhub-heatmap
+docker run --rm -p 80:80 -v ${HOME}/.aws/:/app/.aws/:ro -e 'OIDC_PROVIDER_NAME=none' -e 'BASIC_AUTH_USERNAME=heatmap' -e 'BASIC_AUTH_PASSWORD=set_this_to_a_long_passphrase' --name securityhub-heatmap 117940112483.dkr.ecr.us-east-1.amazonaws.com/7884b327-1a1a-4f59-8d04-0a6edfc28697/cg-2662330872/securityhub-heatmap
 ```
 
-- The above command publishes the container's port 80 to your localhost with NO AUTHENTICATION. This is suitable for local testing/integration only.   To access the web UI enter http://localhost/ in your browser.
+- The above command publishes the container's port 80 to your localhost, disables OIDC authentication and enables BASIC AUTHENTICATION for the specified username and password. This is suitable for local testing/integration only.   To access the web UI enter http://localhost/ in your browser.
 
 - For troubleshooting you can access the local container logs via:
 
