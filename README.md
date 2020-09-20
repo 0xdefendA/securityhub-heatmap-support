@@ -23,15 +23,19 @@ You can and should override these in the container environment, especially to se
 
 
  ### OIDC
- By default the heatmap is authenticated through OIDC. You should issue a client ID and client Secret from your Identity Provider (IDP). You can pass the client secret either through an environment variable directly, or by passing a secrets manager secret name and that name will be retrieved at run time.
+ By default the heatmap is authenticated through OIDC. You should issue a client ID and client Secret from your Identity Provider (IDP). You can pass the client secret either through an environment variable directly, or by passing a secrets manager secret name and the value stored under that name will be retrieved at run time.
 
- - OIDC_PROVIDER_NAME: google by default, set to whatever name you'd like. Set to 'none' to disable OIDC if you are authenticating through some other means (alb, proxy, etc)
+ - OIDC_PROVIDER_NAME: google by default, set to whatever name you'd like. Set to 'none' to disable OIDC if you are authenticating through some other means (alb, proxy, etc) ahead of the container
  - OIDC_ISSUER: the IDP issuer address "https://accounts.google.com" by default
  - OIDC_CLIENT_ID: set to the client ID you receive from your IDP
  - OIDC_CLIENT_SECRET_NAME: the name you use if you store the client secret in secrets manager
  - OIDC_CLIENT_SECRET: the raw secret if you prefer to pass it without using secrets manager
  - OIDC_SESSION_LIFETIME_HOURS: 7 hours by default, set as desired.
 
+
+In your IDP OIDC configuration, be sure to allow the following endpoint as an option for the redirect URI:
+
+ - https://somewhere.yourcompany.com/redirect_uri
 
 
  ### Usage Instructions
