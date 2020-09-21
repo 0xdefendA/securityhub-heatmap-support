@@ -22,8 +22,7 @@
                 "ecr:BatchCheckLayerAvailability"
             ],
             "Resource": [
-                "arn:aws:ecr:*:*:repository/aws-cdk/assets",
-                "arn:aws:ecr:us-east-1:117940112483:repository/7884b327-1a1a-4f59-8d04-0a6edfc28697/cg-1674965903/securityhub-heatmap"
+                "arn:aws:ecr:*:*:repository/aws-cdk/assets"
             ]
         },
         {
