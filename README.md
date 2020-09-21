@@ -21,9 +21,8 @@ You can and should override these in the container environment, especially to se
  - DB_FILENAME: cache file location (set if you would like it elsewhere, an EFS mount, etc)
  - AWS_DEFAULT_REGION: the region the hub will operate in by default for making calls to securityhub.
 
-
- ### OIDC
- By default the heatmap is authenticated through OIDC. You should issue a client ID and client Secret from your Identity Provider (IDP). You can pass the client secret either through an environment variable directly, or by passing a secrets manager secret name and the value stored under that name will be retrieved at run time.
+### OIDC
+By default the heatmap is authenticated through OIDC. You should issue a client ID and client Secret from your Identity Provider (IDP). You can pass the client secret either through an environment variable directly, or by passing a secrets manager secret name and the value stored under that name will be retrieved at run time.
 
  - OIDC_PROVIDER_NAME: google by default, set to whatever name you'd like. Set to 'none' to disable OIDC if you are authenticating through some other means (alb, proxy, etc) ahead of the container
  - OIDC_ISSUER: the IDP issuer address "https://accounts.google.com" by default
@@ -37,8 +36,35 @@ In your IDP OIDC configuration, be sure to allow the following endpoint as an op
 
  - https://somewhere.yourcompany.com/redirect_uri
 
+### CDK Deployment
+To deploy the container via CDK, first ensure you have a [valid subscription via the marketplace](https://aws.amazon.com/marketplace/pp/B08HPXMT8J).
 
- ### Usage Instructions
+Clone this repo and install the CDK toolkit (if you don't already have it):
+
+  - npm install -g aws-cdk
+  - npm update -g aws-cdk (if you just need to update it)
+
+You will want to [update the environment variables for the container in the task definition to match your desired end state](https://github.com/0xdefendA/securityhub-heatmap-support/blob/master/cdk_deployment/deployment_app.py#L54).
+
+The project uses Pipenv [which you can install via these instructions](https://pipenv.pypa.io/en/latest/#install-pipenv-today) if you don't have it yet. Then enter the environment and deploy:
+
+ - pipenv shell
+ - pipenv install
+ - cdk deploy
+
+ At the end of the cloudformation deployment you should see a load balancer output like so:
+
+ ```bash
+ Outputs:
+HeatmapStack.heatmapserviceLoadBalancerDNS9E9928C6 = Heatm-heatm-1IPDGJZ1A85NL-dc68bcf73c814362.elb.us-west-2.amazonaws.com
+```
+
+You can use that as an ANAME record for whatever DNS address you've given to your heatmap installation.
+
+
+
+
+ ### Local Usage Instructions
 
  - Install and configure the AWS CLI. Please see https://docs.aws.amazon.com/cli/latest/userguide/installing.html for details.
 
