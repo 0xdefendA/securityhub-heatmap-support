@@ -47,7 +47,9 @@ class HeatmapStack(core.Stack):
         # can be over-ridden with an environment variable
         heatmap_task.add_container(
             "heatmap",
-            image=ecs.ContainerImage.from_registry("<registry goes here>"),
+            image=ecs.ContainerImage.fromEcrRepository(
+                "117940112483.dkr.ecr.us-east-1.amazonaws.com/7884b327-1a1a-4f59-8d04-0a6edfc28697/cg-1674965903/securityhub-heatmap"
+            ),
             essential=True,
             environment={
                 "LOCALDOMAIN": "heatmap.local",
