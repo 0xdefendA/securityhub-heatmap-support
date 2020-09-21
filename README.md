@@ -54,7 +54,7 @@ On successful login the following message will be seen :
 
  - Now pull the docker image
 ```
-docker pull 117940112483.dkr.ecr.us-east-1.amazonaws.com/7884b327-1a1a-4f59-8d04-0a6edfc28697/cg-2662330872/securityhub-heatmap
+docker pull 117940112483.dkr.ecr.us-east-1.amazonaws.com/7884b327-1a1a-4f59-8d04-0a6edfc28697/cg-1674965903/securityhub-heatmap
 ```
 
  - Start a single local instance of the container via the following:
