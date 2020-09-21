@@ -6,6 +6,7 @@ from aws_cdk import (
     aws_logs as logs,
     aws_ecs_patterns as ecs_patterns,
     aws_iam as iam,
+    aws_ecr as ecr,
 )
 from aws_cdk.aws_elasticloadbalancingv2 import ApplicationProtocol
 from aws_cdk.aws_ecr_assets import DockerImageAsset
@@ -18,6 +19,12 @@ class HeatmapStack(core.Stack):
         vpc = ec2.Vpc(self, "HeatMapVPC", max_azs=2)  # default is all AZs in region
         cluster = ecs.Cluster(self, "HeatmapCluster", vpc=vpc)
         cluster.add_default_cloud_map_namespace(name="heatmap.local")
+        repo = ecr.Repository(self, "heatmap_repo")
+        repo_image = repo.from_repository_name(
+            self,
+            "heatmap_image",
+            "117940112483.dkr.ecr.us-east-1.amazonaws.com/7884b327-1a1a-4f59-8d04-0a6edfc28697/cg-1674965903/securityhub-heatmap",
+        )
 
         policy_json = None
         with open("cdk_deployment/heatmap_policy.json") as f:
@@ -47,9 +54,7 @@ class HeatmapStack(core.Stack):
         # can be over-ridden with an environment variable
         heatmap_task.add_container(
             "heatmap",
-            image=ecs.ContainerImage.fromEcrRepository(
-                "117940112483.dkr.ecr.us-east-1.amazonaws.com/7884b327-1a1a-4f59-8d04-0a6edfc28697/cg-1674965903/securityhub-heatmap"
-            ),
+            image=ecs.ContainerImage.from_ecr_repository(repo_image),
             essential=True,
             environment={
                 "LOCALDOMAIN": "heatmap.local",
