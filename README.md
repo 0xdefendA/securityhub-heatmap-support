@@ -44,7 +44,7 @@ Clone this repo and install the CDK toolkit (if you don't already have it):
   - npm install -g aws-cdk
   - npm update -g aws-cdk (if you just need to update it)
 
-You will want to [update the environment variables for the container in the task definition to match your desired end state](https://github.com/0xdefendA/securityhub-heatmap-support/blob/master/cdk_deployment/deployment_app.py#L54).
+You will want to [update the environment variables for the container in the task definition to match your desired end state](https://github.com/0xdefendA/securityhub-heatmap-support/blob/master/cdk_deployment/deployment_app.py#L64).
 
 The project uses Pipenv [which you can install via these instructions](https://pipenv.pypa.io/en/latest/#install-pipenv-today) if you don't have it yet. Then enter the environment and deploy:
 
