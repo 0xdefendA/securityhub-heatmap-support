@@ -1,5 +1,5 @@
-# securityhub-heatmap-support
-Supporting code, docs, issues, etc for the securityhub-heatmap container
+# Securityhub Heatmap Support
+Supporting code, docs, issues, etc for the securityhub heatmap container available in the [AWS Marketplace](https://aws.amazon.com/marketplace/pp/B08HPXMT8J)
 
 
 ## CDK
@@ -8,9 +8,9 @@ The cdk_deployment directory contains code to get a working deployment of the he
 The heatmap_policy.json doc is the IAM policy used by the CDK deployment and includes everything the heatmap will need in order to operate. You can use this as a kickstarter if you plan to deploy via some other means (terraform, cloudformation, etc)
 
 ### Environment
-The default environment/configuration variables are set initially in config.yml (inside the container).
+The default environment/configuration variables are set initially in config.yml inside the container. A copy of the default config.yml is included in this repo if you'd like a reference.
 
-You can and should override these in the container environment, especially to set:
+Every variable can be overridden via the container Environment. You can and should override these in your production container environment, especially to set:
 
  - SERVER_NAME : dns name of the resulting server (i.e. heatmap.somewhere.com)
  - PREFERRED_URL_SCHEME: http by default, should set to https in a production setting
@@ -19,7 +19,7 @@ You can and should override these in the container environment, especially to se
  - REGIONS: a list of regions you'd like to retrieve findings from. If more than one, separate with commas i.e. us-west-1,us-east-1
  - CACHE_EXPIRATION: 10 min by default, This determines the frequency by which the heatmap will refresh it's cache of all findings from security hub. Any updates within the heatmap are cached on update. If you expect frequent external updates to findings, set the expiration accordingly. (sec = seconds, min = minutes, hours=hours, days=days )
  - DB_FILENAME: cache file location (set if you would like it elsewhere, an EFS mount, etc)
- - AWS_DEFAULT_REGION: the region the hub will operate in by default for making calls to securityhub.
+ - AWS_DEFAULT_REGION: us-west-2 by default. The region the hub will operate in by default for making calls to securityhub.
 
 ### OIDC
 By default the heatmap is authenticated through OIDC. You should issue a client ID and client Secret from your Identity Provider (IDP). You can pass the client secret either through an environment variable directly, or by passing a secrets manager secret name and the value stored under that name will be retrieved at run time.
@@ -32,9 +32,9 @@ By default the heatmap is authenticated through OIDC. You should issue a client 
  - OIDC_SESSION_LIFETIME_HOURS: 7 hours by default, set as desired.
 
 
-In your IDP OIDC configuration, be sure to allow the following endpoint as an option for the redirect URI:
+In your IDP OIDC configuration, be sure to allow an endpoint matching your deployment DNS as an option for the redirect URI:
 
- - https://somewhere.yourcompany.com/redirect_uri
+ - https://heatmap.yourcompany.com/redirect_uri
 
 ### CDK Deployment
 To deploy the container via CDK, first ensure you have a [valid subscription via the marketplace](https://aws.amazon.com/marketplace/pp/B08HPXMT8J).
@@ -65,6 +65,7 @@ You can use that as an ANAME record for whatever DNS address you've given to you
 
 
  ### Local Usage Instructions
+ To take the container for a spin locally without deploying to AWS:
 
  - Install and configure the AWS CLI. Please see https://docs.aws.amazon.com/cli/latest/userguide/installing.html for details.
 
